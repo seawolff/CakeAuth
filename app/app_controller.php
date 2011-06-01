@@ -11,7 +11,7 @@ class AppController extends Controller
 		$this->Auth->authError = 'Please login to view this page.';
 		$this->Auth->loginError = 'Incorrect username/password combination.';
 		$this->Auth->loginRedirect = array('controller' => 'posts', 'action' => 'index');
-		$this->Auth->logoutRedirect = array("controller" => "posts", "action" => "index");
+		$this->Auth->logoutRedirect = array("controller" => "pages", "action" => "home");
 		
 	    $this->set('admin', $this->_isAdmin());
 	    $this->set('logged_in', $this->_loggedIn());
