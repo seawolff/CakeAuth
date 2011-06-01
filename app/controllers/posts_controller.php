@@ -17,10 +17,11 @@ class PostsController extends AppController {
 		$this->set('posts', $this->paginate());
 		
 		//set so the user can only see their own posts
-		if ($this->Auth->user('roles') != 'admin') 
-		{
+		//if ($this->Auth->user('roles') != 'admin') 
+		//{
+			# The users posts are private even to the admin 
 			$this->set('posts', $this->Post->find('all', array('conditions' => array('user_id' => $this->Auth->user('id')))));
-		}
+		//}
 	}
 
 	function view($id = null) {

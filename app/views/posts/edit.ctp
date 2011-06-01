@@ -1,5 +1,5 @@
 <div class="posts form">
-<?php echo $this->Form->create('Post');?>
+<?php echo $this->Form->create('Note');?>
 	<fieldset>
 		<legend><?php __('Edit Post'); ?></legend>
 	<?php
