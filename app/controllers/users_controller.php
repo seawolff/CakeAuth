@@ -2,14 +2,14 @@
 class UsersController extends AppController {
 
 	var $name = 'Users';
-	var $components = array('N');
+	var $components = array('N', 'Email', 'Otp');
 	
 	
 	function beforeFilter()
 	{
 		parent::beforeFilter();
 		
-		$this->Auth->allow("add");
+		$this->Auth->allow("add", "register");
 		
 		if($this->action == 'add' || $this->action == 'edit')
 		{
@@ -27,7 +27,6 @@ class UsersController extends AppController {
 	{
 		$this->redirect($this->Auth->logout());
 	}
-
 
 	function index() 
 	{
@@ -52,7 +51,67 @@ class UsersController extends AppController {
 
 	function add() 
 	{
+		
 		if (!empty($this->data)) 
+		{
+			//get username
+            $username = $this->data["User"]["username"];
+            $user = $this->User->FindByUsername($username);
+			
+			//get entered password
+			$password = $this->data["User"]["password"];
+			//echo $password;
+			
+			//get entered email
+			$email = $this->data["User"]["email"];
+			//echo $email;
+			
+				$this->User->create();
+                if ($this->User->save($this->data)) 
+				{
+                    $user = array(
+                                'User' => array(
+                                'password' => $password,
+                                'username' =>$username,
+								'email' => $email,
+                                ),
+
+                            );
+                            
+                            //$this->User->save($this->data);
+
+                    // setup the TIME TO LIVE (valid until date) for the next two days
+                    $now = microtime(true);
+                    $ttl =$now + 48*3600; // the invitation is good for the next two days
+
+                    // create the OTP - TTL = time to live
+                    $otp = $this->Otp->createOTP(array('user'=>$username,'password'=>$password, 'email'=>$email, 'ttl'=> $ttl) );
+
+                    $link = '<a href="http://' . $_SERVER['SERVER_NAME'] . Dispatcher::baseUrl()."/users/register/".$email."/".$ttl."/".$otp.'"> Registration link</a>';
+                     // send mail
+                    $this->Email->from    = "register@auth.com";
+                    $this->Email->to      = $email;
+
+                    $this->Email->subject = "Your Account Activation";
+                    $this->Email->sendAs = 'html';
+
+
+                    $body = "Please use the following link to activate your account:<br>";
+                    $body .= $link;
+
+                    $this->Email->send($body);
+                    $this->Session->setFlash("Please check your email for a confirmation");
+                    $this->redirect("/");
+                }
+				else
+				{
+                   $this->Session->setFlash("This user is already in the system, please try another email");
+
+                }
+
+        }
+		
+		/*if (!empty($this->data)) 
 		{
 			$this->User->create();
 			
@@ -65,8 +124,90 @@ class UsersController extends AppController {
 			{
 				$this->Session->setFlash(__('The user could not be saved. Please, try again.', true));
 			}
-		}
+		}*/
 	}
+
+	function register($email,$ttl,$otp) 
+	{
+
+	            $user = $this->User->findByEmail($email);
+				
+                if($user)
+				{
+                    $passwordHash = $user["User"]["password"];
+
+                    $now = microtime(true);
+                    // check expiration date. the experation date should be greater them now.
+
+                    if($now <  $ttl)
+					{
+						
+                        // validate OTP
+                        //if($this->Otp->authenticateOTP($otp, array('user'=>$email,'password'=>$passwordHash,'ttl'=> $ttl)) )
+						//{
+						$isActive = $user["User"]["active"];
+						//echo $isActive;
+						
+						if($isActive == 0)
+						{
+							
+							   $this->Otp->authenticateOTP($otp, array('user'=>$email,'password'=>$passwordHash,'ttl'=> $ttl));
+							
+                               if (!empty($this->data)) 
+							   {
+                                   // activate the account by setting the password
+                                   $password = $this->data["User"]["password"];
+                                   $this->User->id =  $user["User"]["id"];
+							   
+								   if ($this->User->save($this->data)) 
+								   {
+										//make user active
+										$isActive = 1;
+										$this->User->saveField('active', $isActive);
+									
+									   //$this->User->save($this->data);   //$this->User->save('password',   $this->Auth->password($password));
+	                                   $this->Session->setFlash( 'Password Changed');
+	                                   $this->redirect(array('action' => 'login'));
+								   }
+								   else 
+								   {
+										$this->Session->setFlash(__('The user could not be saved. Please, try again.', true));
+								   }
+
+                               }
+							   else 
+							   {
+									$this->Session->setFlash(__('The user could not be saved. Please, try again.', true));
+							   }
+							
+                               $this->set('email', $email);
+                               $this->set('ttime', $ttl);
+                               $this->set('hash', $otp);
+
+                        }
+						else
+						{
+                            $this->Session->setFlash("Invalid request.");
+                            // send to a error view
+                            $this->redirect(array('action' => 'login'));
+
+                        }
+                    }
+					else
+					{
+                        $this->Session->setFlash("Your invitation has expired.");
+                        // send to a error view
+                       $this->redirect(array('action' => 'login'));
+                    }
+                }
+				else
+				{
+					 $this->Session->setFlash("Invalid request.");
+					$this->redirect(array('action' => 'login'));
+				}
+
+    }
+	
 
 	function edit($id = null) 
 	{	

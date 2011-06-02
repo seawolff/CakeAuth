@@ -9,7 +9,7 @@ class AppModel extends Model
 	    // copy the data over from a custom var, otherwise
 	    $actionSet = 'validate' . Inflector::camelize(Router::getParam('action'));
 	    if (isset($this->validationSet)) 
-	{
+		{
 	        $temp = $this->validate;
 	        $param = 'validate' . $validationSet;
 	        $this->validate = $this->{$param};
