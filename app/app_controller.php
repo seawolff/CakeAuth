@@ -20,6 +20,7 @@ class AppController extends Controller
 		$this->set('users_userid',$this->_usersUserid()); 
 	}
 	
+	
 	function _usersUserid()
 	{
         $users_userid=0;

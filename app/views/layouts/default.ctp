@@ -29,10 +29,8 @@
 		echo $this->Html->meta('icon');
 
 		echo $this->Html->css('cake.generic');
-
-		echo $scripts_for_layout;
-  ?>
-
+  	?>
+	
   <style>
     #user-nav
     {
@@ -45,13 +43,13 @@
 <body>
 	<div id="container">
 		<div id="header">
-			<h1><?php echo $this->Html->link(__('CakePHP: the rapid development php framework', true), 'http://cakephp.org'); ?></h1>
+			<h1><?php echo $this->Html->link(__('Meeting Place', true), array('controller' => '', 'action' => 'index')); ?></h1>
 		</div>
 		<div id="content">
       
       <div id="user-nav">
         <?php if($logged_in): ?>
-        Welcome, <?php echo $users_username; ?>. <?php echo $html->link('Logout', array('controller'=>'users', 'action'=>'logout')); ?>
+        Welcome, <?php echo $html->link($users_username, array('controller'=>'users', 'action' => sprintf('view/%s', $users_userid) )); ?>. <?php echo $html->link('Logout', array('controller'=>'users', 'action'=>'logout')); ?>
         <?php else: ?>
           <?php echo $html->link('Register', array('controller'=>'users', 'action'=>'add')); ?> or
           <?php echo $html->link('Login', array('controller'=>'users', 'action'=>'login')); ?>
@@ -64,14 +62,14 @@
 
 		</div>
 		<div id="footer">
-			<?php echo $this->Html->link(
-					$this->Html->image('cake.power.gif', array('alt'=> __('CakePHP: the rapid development php framework', true), 'border' => '0')),
-					'http://www.cakephp.org/',
-					array('target' => '_blank', 'escape' => false)
-				);
-			?>
 		</div>
 	</div>
-	<?php echo $this->element('sql_dump'); ?>
+	<?php if($admin) echo $this->element('sql_dump'); ?>
+	
+	
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script>!window.jQuery && document.write('<script src="lib/jquery.js"><\/script>')</script>
+
+<?php  echo $scripts_for_layout; ?>
 </body>
 </html>

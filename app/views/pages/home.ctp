@@ -18,6 +18,7 @@
 			<ul>
 		      	<li><?php echo $this->Html->link(__('Users', true), array('controller' => 'users', 'action' => 'index')); ?> </li>
 				<li><?php echo $this->Html->link(__('Add User', true), array('controller' => 'users', 'action' => 'add')); ?> </li>
+				<li><?php echo $this->Html->link(__('Add Files', true), array('controller' => 'collaterals', 'action' => 'add')); ?> </li>
 			</ul>
 		</div><!--#admin_links-->
     <?php endif; ?>
