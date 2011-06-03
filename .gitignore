@@ -3,3 +3,6 @@
 /plugins
 /vendors
 /app/webroot/media
+/app/.DS_Store
+/cake/.DS_Store
+.DS_Store
