@@ -17,7 +17,7 @@
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Password'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>	x
 			<?php echo $user['User']['password']; ?>
 			&nbsp;
 		</dd>
