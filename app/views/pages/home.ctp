@@ -4,7 +4,7 @@
 	<div id="dashboard_links">
 		<ul>
 			<li>Meeting topic</li>
-			<li>Files</li>
+			<li><?php echo $this->Html->link(__('Files', true), array('controller' => 'Collaterals', 'action' => 'index')); ?></li>
 			<li>Favorited Files</li>
 			<li>Contacts</li>
 			<li><?php echo $this->Html->link(__('Notes', true), array('controller' => 'Posts', 'action' => 'index'));?></li>

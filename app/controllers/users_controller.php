@@ -51,6 +51,8 @@ class UsersController extends AppController {
 
 	function add() 
 	{
+		$this->set('groups', $this->User->Group->find('list'));
+	    
 		
 		if (!empty($this->data)) 
 		{

@@ -10,9 +10,10 @@
 		echo $this->Form->input('password');
 		echo $this->Form->input('password_confirmation', array('type'=>'password'));
 		echo $this->Form->input('email');
+		echo $this->Form->input('group_id');
 		if($admin)
 		{
-			echo $this->Form->input('roles');
+			echo $this->Form->input('roles', array('value' => 'regularuser'));
 		}
 	?>
 	</fieldset>

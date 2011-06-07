@@ -18,5 +18,17 @@ class Collateral extends AppModel
 			)
 		)
 	);
+	
+	
+	var $belongsTo = array(
+		'Group' => array(
+			'className' => 'Group',
+			'foreignKey' => 'group_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		)
+	);
+	
 }
 ?>

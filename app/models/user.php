@@ -3,6 +3,15 @@ class User extends AppModel {
 	var $name = 'User';
 	var $displayField = 'name';
 
+	var $belongsTo = array(
+		'Group' => array(
+			'className' => 'Group',
+			'foreignKey' => 'group_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		)
+	);
 
 	var $hasMany = array(
 		'Post' => array(
