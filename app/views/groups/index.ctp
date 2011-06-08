@@ -20,7 +20,12 @@
 		<td><?php echo $group['Group']['id']; ?>&nbsp;</td>
 		<td><?php echo $group['Group']['name']; ?>&nbsp;</td>
 		<td><?php echo $group['Group']['description']; ?>&nbsp;</td>
-		<td><?php echo $group['Group']['active']; ?>&nbsp;</td>
+		<td><?php 
+				if($group['Group']['active'] == 1)
+					echo 'Active';
+				else
+					echo 'Non-Active';
+			?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $group['Group']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $group['Group']['id'])); ?>

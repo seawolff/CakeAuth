@@ -9,7 +9,7 @@ class UsersController extends AppController {
 	{
 		parent::beforeFilter();
 		
-		$this->Auth->allow("add", "register");
+		$this->Auth->allow("register");
 		
 		if($this->action == 'add' || $this->action == 'edit')
 		{
@@ -37,7 +37,7 @@ class UsersController extends AppController {
 	    if ($this->Auth->user('roles') != 'admin') 
 		{
 			//$this->Session->setFlash(__('Invalid user', true));
-			$this->redirect(array("controller" => "posts", "action" => "index"));
+			$this->redirect(array("controller" => "pages", "action" => "home"));
 		}
 	}
 
@@ -51,8 +51,12 @@ class UsersController extends AppController {
 
 	function add() 
 	{
+		if ($this->Auth->user('roles') != 'admin') 
+		{
+			$this->redirect(array("controller" => "pages", "action" => "home"));
+		}
+		
 		$this->set('groups', $this->User->Group->find('list'));
-	    
 		
 		if (!empty($this->data)) 
 		{

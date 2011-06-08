@@ -4,7 +4,7 @@ class GroupsController extends AppController {
 	var $name = 'Groups';
 
 	function index() 
-	{
+	{	
 		$this->Group->recursive = 0;
 		$this->set('groups', $this->paginate());
 	}
@@ -36,7 +36,7 @@ class GroupsController extends AppController {
 	}
 
 	function edit($id = null) 
-	{
+	{	
 		if (!$id && empty($this->data)) 
 		{
 			$this->Session->setFlash(__('Invalid group', true));

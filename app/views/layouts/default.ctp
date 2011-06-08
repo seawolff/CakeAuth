@@ -22,7 +22,7 @@
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
-		<?php __('CakePHP: the rapid development php framework:'); ?>
+		<?php __('Meeting Place | user driven meetings'); ?>
 		<?php echo $title_for_layout; ?>
 	</title>
 	<?php
@@ -51,7 +51,7 @@
         <?php if($logged_in): ?>
         Welcome, <?php echo $html->link($users_username, array('controller'=>'users', 'action' => sprintf('view/%s', $users_userid) )); ?>. <?php echo $html->link('Logout', array('controller'=>'users', 'action'=>'logout')); ?>
         <?php else: ?>
-          <?php echo $html->link('Register', array('controller'=>'users', 'action'=>'add')); ?> or
+          <!--<?php echo $html->link('Register', array('controller'=>'users', 'action'=>'add')); ?> or-->
           <?php echo $html->link('Login', array('controller'=>'users', 'action'=>'login')); ?>
         <?php endif; ?>
       </div>

@@ -19,16 +19,10 @@
 		      	<li><?php echo $this->Html->link(__('Users', true), array('controller' => 'users', 'action' => 'index')); ?> </li>
 				<li><?php echo $this->Html->link(__('Add User', true), array('controller' => 'users', 'action' => 'add')); ?> </li>
 				<li><?php echo $this->Html->link(__('Add Files', true), array('controller' => 'collaterals', 'action' => 'add')); ?> </li>
+				<li><?php echo $this->Html->link(__('Groups', true), array('controller' => 'groups', 'action' => 'index')); ?> </li>
+				<li><?php echo $this->Html->link(__('Add Groups', true), array('controller' => 'groups', 'action' => 'add')); ?> </li>
 			</ul>
 		</div><!--#admin_links-->
     <?php endif; ?>
-
-	<div style="position:relative; float:right;">
-		<h1>Editing this Page</h1>
-
-		<p>To change the content of this page, create: APP/views/pages/home.ctp.<br/>
-		To change its layout, create: APP/views/layouts/default.ctp.<br/>
-		You can also add some CSS styles for your pages at: APP/webroot/css.</p>
-	</div>
 	
 </div><!--.dashboard_index-->

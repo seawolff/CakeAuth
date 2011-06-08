@@ -6,7 +6,10 @@
 		echo $this->Form->input('id');
 		echo $this->Form->input('name');
 		echo $this->Form->input('description');
-		echo $this->Form->input('active');
+		
+		$options = array('1' => 'Active', "0" => 'Non-Active');
+		
+		echo $this->Form->select('active', $options, null, array('escape' => false));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit', true));?>
